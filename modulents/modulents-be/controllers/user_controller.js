@@ -59,5 +59,69 @@ const userControllers = {
             msg: "User created successfully"
         })
     },
-    login:
+    login: async (req, res) => {
+        const data = req.body
+
+        const validationResult = userValidators.loginSchema.validate(data)
+
+        if (validationResult.error) {
+            res.statusCode = 400
+            return res.json({
+                msg: validationResult.error.details[0].message
+            })
+        }
+
+        // check if the user exists or has registered via their email (unique identifier)
+        // return login error status code 400 if not found
+
+        let user = null
+        try {
+            user = await userModel.findOne({ email: data.email })
+        } catch (err) {
+            res.statusCode = 500
+            return res.json({
+                msg: "Error occured when fetching user"
+            })
+        }
+
+        if (!user) {
+            res.statusCode = 401
+            return res.json({
+                msg: "Login failed, email not registered"
+            })
+        }
+
+        // bcrypt will be used to compare the entered password against the DB record in mongo and return 401 status error message
+
+        const validLogin = await bcrypt.compare(data.password, user.password)
+
+        if (!validLogin) {
+            res.statusCode = 401
+            return res.json({
+                msg: "Login failed, incorrect password"
+            })
+        }
+        // generate JWT using an external lib
+        const token = jwt.sign(
+            {
+                name: user.name,
+                email: user.email,
+            },
+            process.env.APP_KEY,
+            {
+                expiresIn: "10 days",
+                audience: "FE",
+                issuer: "BE",
+                subject: user._id.toString(), // _id from Mongoose is type of ObjectID,
+            }
+        )
+
+        // return response with JWT
+        res.json({
+            msg: 'Success',
+            token: token,
+        })
+    }
 }
+
+module.exports = userControllers

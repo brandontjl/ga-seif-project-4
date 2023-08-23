@@ -7,7 +7,7 @@ const companySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    administrator: { // this will be the registered email of the registered user
+    administratorEmail: { // this will be the registered email of the registered user
         type: String,
         required: true,
         unique: true
