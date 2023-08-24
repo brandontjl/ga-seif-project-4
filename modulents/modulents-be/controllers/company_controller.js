@@ -3,7 +3,7 @@ const Joi = require('joi')
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const companyModel = require("../models/CompanyModel")
-const userValidators = require("./validators/companyValidators")
+const companyValidators = require("./validators/companyValidators")
 
 const companyControllers = {
     register: async (req, res) => {

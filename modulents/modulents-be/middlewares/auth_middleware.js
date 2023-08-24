@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 
 const middleware = (req, res, next) => {
     // check if request is authenticated
-    // - look inside header for Authorization key
-    // - key not exists -> return 401
+    // look inside header for Authorization key
+    // key not exists -> return 401
 
     const authzHeaderVal = req.headers.authorization;
     if (!authzHeaderVal) {
