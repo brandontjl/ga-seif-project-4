@@ -1,20 +1,23 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const companyProjectsSchema = new mongoose.Schema(
+const userPortfolioSchema = new mongoose.Schema(
     {
         projectName: { type: String, required: true },
-        date: { type: Date, required: true },
-        teamSize: { type: Number, required: true },
+        date_completed: { type: Date, required: true },
+        company: { type: Number },
         projectDescription: { type: String, required: true },
         skills: { type: String, required: true },
+        url: {
+            work: mongoose.SchemaTypes.url
+        },
         file: {
             data: Buffer,
             contentType: String
         },
-        adminID: {
+        userID: {
             type: Schema.Types.ObjectId,
-            ref: "Company",
+            ref: "User",
             index: true,
             required: true,
         },
@@ -24,5 +27,5 @@ const companyProjectsSchema = new mongoose.Schema(
     }
 )
 
-const Projects = mongoose.model("Projects", companyProjectsSchema);
-module.exports = Projects
+const Portfolio = mongoose.model("Portfolio", userPortfolioSchema);
+module.exports = Portfolio
