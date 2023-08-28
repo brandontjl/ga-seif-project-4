@@ -1,12 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser")
 const port = 3000;
 const app = express();
 const cors = require("cors");
 const multer = require('multer')
 const userRouter = require("./routers/user_router")
 const companyRouter = require("./routers/company_router")
-const companyProjects = require("./routers/company_projects")
+const projectsRouter = require("./routers/company_projects")
+const portfolioRouter = require("./routers/portfolio_router")
 
 // middleware to handle URL-encoded form data
 app.use(express.urlencoded({ extended: true }));
@@ -23,14 +25,14 @@ app.options("*", cors());
 // API endpoint routes
 app.use("/api/users", userRouter);
 
-// Expense Controller routes
-app.use("/api/expense", expenseRouter);
+// Company Admin endpoint routes
+app.use("/api/company", companyRouter);
 
-// Expense Controller routes
-app.use("/api/income", incomeRouter);
+// Project Controller routes
+app.use("/api/projects", projectsRouter);
 
-// Travel Expense API endpoint route
-app.use('/api/travel', travelRouter)
+// Portfolio Controller routes
+app.use("/api/portfolio", portfolioRouter);
 
 app.get("/api/test", (req, res) => {
     res.json("server works!");
@@ -53,3 +55,5 @@ mongoose
     .catch((err) => {
         console.log("err when connecting: " + err);
     });
+
+    // mongodb://localhost:27017/modulents
