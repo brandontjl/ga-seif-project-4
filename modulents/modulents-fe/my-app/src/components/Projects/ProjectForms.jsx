@@ -28,7 +28,6 @@ function ProjectUploadForm() {
     const [projectDescription, setProjectDescription] = useState("")
     const [skills, setSkills] = useState("")
     const [url, setUrl] = useState("")
-    const [file, setFile] = useState(null)
 
     // projectName: { type: String, required: true },
     // date: { type: Date, required: true },

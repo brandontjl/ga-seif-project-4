@@ -1,14 +1,14 @@
-const projectModel = require("../models/CompanyProjectsModel");
+const projectModel = require("../models/ProjectsModel");
 const projectValidator = require("./validators/projectValidator")
 
 // how to split the controller for either admin or user?
 
 const projectController = {
     listProjects: async (res, req) => {
-        const adminID = res.locals.authUserID
+        const userID = res.locals.authUserID
 
         try {
-            const projects = await projectModel.find({ adminID: adminID });
+            const projects = await projectModel.find({ userID: userID });
             return res.status(200).json(projects);
         } catch (err) {
             console.error(">>> error getting projects: ", err);
@@ -20,9 +20,9 @@ const projectController = {
 
     // create a project to reflect to users / freelancers
     createProject: async (req, res) => {
-        const adminID = res.locals.authUserID
+        const userID = res.locals.authUserID
 
-        const projectUpload = { ...req.body, adminID: adminID };
+        const projectUpload = { ...req.body, userID: userID };
 
         // validate data
         const validationResult = projectValidator.createProjectSchema.validate(projectUpload)
@@ -41,8 +41,7 @@ const projectController = {
                     teamSize: projectUpload.teamSize,
                     projectDescription: projectUpload.projectDescription,
                     skills: projectUpload.skills,
-                    file: projectUpload.file, // need to check on this
-                    adminID: projectUpload.adminID
+                    userID: projectUpload.userID
                 });
             res.statusCode = 201;
             res.json({
@@ -57,9 +56,9 @@ const projectController = {
     },
 
     deleteProject: async (req, res) => {
-        const adminID = res.locals.authUserID
+        const userID = res.locals.authUserID
 
-        const projectUpload = { ...req.body, adminID: adminID }
+        const projectUpload = { ...req.body, userID: userID }
 
         // validate project data
 
@@ -81,11 +80,11 @@ const projectController = {
     },
 
     updateProject: async (req, res) => {
-        const adminID = res.locals.authUserID;
+        const userID = res.locals.authUserID;
         const data = req.body;
         let record = null;
 
-        const projectUpload = { ...req.body, adminID: adminID }
+        const projectUpload = { ...req.body, userID: userID }
 
         const validationResult = projectValidator.createProjectSchema.validate(projectUpload);
 
@@ -115,7 +114,6 @@ const projectController = {
                     teamSize: data.teamSize,
                     projectDescription: data.projectDescription,
                     skills: data.skills,
-                    file: data.file, // need to check on this
                 }
             );
             return res.status(200).json({ msg: "Project record updated successfully" })

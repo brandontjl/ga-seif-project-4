@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "./auth/AuthProvider";
 import { styled } from "styled-components";
-// import COVER_IMAGE from "../img/loginCoverPage.jpg";
+import COVER_IMAGE from "../img/loginCoverPage.jpg";
 
-export default function Register() {
+export default function Login() {
     const navigate = useNavigate();
+    const { loginSuccess } = useContext(AuthContext);
 
     // create state to store form data
     const [formData, setFormData] = useState({});
@@ -15,48 +17,38 @@ export default function Register() {
         setFormData({ ...formData, [fieldName]: e.target.value });
     };
 
+    // need to change this as well
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-            .post(
-                "https://expense-tracker-bzs3.onrender.com/api/users/register",
-                formData
-            )
+            .post("https://expense-tracker-bzs3.onrender.com/api/users/login", formData)
             .then((response) => {
-                console.info(">>> register user response: ", response);
-                navigate("/login");
+                console.info(">>> login user response: ", response);
+                loginSuccess(response.data.token);
+                navigate("/");
             })
             .catch((err) => {
-                console.error(">>> register user error: ", err);
+                console.error(">>> login user error: ", err);
                 setError(err.message);
                 window.alert(err.message);
             });
     };
 
     return (
-        <RegisterStyled>
+        <LoginStyled>
             <div className="image-container">
                 <img src={COVER_IMAGE} alt="" />
             </div>
-
-            <div className="register-container">
+            <div className="login-container">
                 <div className="form-container">
-                    <h3>Be your own boss and take control of your destiny</h3>
+                    <h3>
+                        Find your A-Team and the most interesting projects!
+                    </h3>
 
                     <form onSubmit={handleSubmit}>
                         <div className="input-container">
                             <input
                                 type="text"
-                                id="name"
-                                name="name"
-                                placeholder="Name"
-                                required
-                                onChange={(e) => {
-                                    handleFormChange(e, "name");
-                                }}
-                            />
-                            <input
-                                type="email"
                                 id="email"
                                 name="email"
                                 placeholder="Email"
@@ -75,25 +67,24 @@ export default function Register() {
                                     handleFormChange(e, "password");
                                 }}
                             />
-                            <div>
-                                <button type="submit">Register</button>
+                            <div className="btn-container">
+                                <button type="submit">Login</button>
                                 <button
                                     onClick={() => {
-                                        navigate(-1);
+                                        navigate("/register");
                                     }}
                                 >
-                                    Back
+                                    Sign Up
                                 </button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-        </RegisterStyled>
+        </LoginStyled>
     );
 }
-
-const RegisterStyled = styled.div`
+const LoginStyled = styled.div`
   .image-container {
     position: absolute;
     display: flex;
@@ -129,7 +120,7 @@ const RegisterStyled = styled.div`
     }
   }
 
-  .register-container {
+  .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,9 +131,9 @@ const RegisterStyled = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 8%;
+    margin-top: 10%;
     width: 25em;
-    height: 27em;
+    height: 25em;
     background: #fcf6f9;
     border: 2px solid #ffffff;
     border-radius: 1em;

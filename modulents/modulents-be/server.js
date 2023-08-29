@@ -4,10 +4,9 @@ const bodyParser = require("body-parser")
 const port = 3000;
 const app = express();
 const cors = require("cors");
-const multer = require('multer')
+const multer = require('multer') // remove if say not using file upload
 const userRouter = require("./routers/user_router")
-const companyRouter = require("./routers/company_router")
-const projectsRouter = require("./routers/company_projects")
+const projectsRouter = require("./routers/projects_router")
 const portfolioRouter = require("./routers/portfolio_router")
 
 // middleware to handle URL-encoded form data
@@ -25,8 +24,8 @@ app.options("*", cors());
 // API endpoint routes
 app.use("/api/users", userRouter);
 
-// Company Admin endpoint routes
-app.use("/api/company", companyRouter);
+// // Company Admin endpoint routes
+// app.use("/api/company", companyRouter); not needed any longer since merging both ends together
 
 // Project Controller routes
 app.use("/api/projects", projectsRouter);
@@ -40,7 +39,6 @@ app.get("/api/test", (req, res) => {
 
 // LISTENER
 mongoose
-    // .connect(`mongodb://localhost:27017/expense-tracker`)
     .connect(
         `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_HOST}/${process.env.MONGO_DB}?retryWrites=true&w=majority`
     )
@@ -49,7 +47,7 @@ mongoose
 
         // boot up app
         app.listen(port, () => {
-            console.log("Expense tracker running on port: ", port);
+            console.log("Modulents portal running on port: ", port);
         });
     })
     .catch((err) => {

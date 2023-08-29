@@ -3,7 +3,7 @@ const Joi = require('joi')
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const userModel = require("../models/UserModel")
-const userValidators = require("./validators/userValidators")
+const userValidators = require("./validators/userValidator")
 
 const userControllers = {
     register: async (req, res) => {
@@ -13,7 +13,7 @@ const userControllers = {
         if (validationResult.error) {
             res.statusCode = 400
 
-            returnres.json({
+            return res.json({
                 msg: validationResult.error.details[0].message
             })
         }
@@ -106,6 +106,7 @@ const userControllers = {
             {
                 name: user.name,
                 email: user.email,
+                // can pass in other user data as well - i.e., user type
             },
             process.env.APP_KEY,
             {

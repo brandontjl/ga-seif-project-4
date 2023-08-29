@@ -8,13 +8,7 @@ const userPortfolioSchema = new mongoose.Schema(
         company: { type: Number },
         projectDescription: { type: String, required: true },
         skills: { type: String, required: true },
-        url: {
-            work: mongoose.SchemaTypes.url
-        },
-        file: {
-            data: Buffer,
-            contentType: String
-        },
+        url: { type: String },
         userID: {
             type: Schema.Types.ObjectId,
             ref: "User",

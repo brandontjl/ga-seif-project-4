@@ -8,19 +8,18 @@ const companyProjectsSchema = new mongoose.Schema(
         teamSize: { type: Number, required: true },
         projectDescription: { type: String, required: true },
         skills: { type: String, required: true },
-        file: {
-            data: Buffer,
-            contentType: String
-        },
-        adminID: {
+        userID: {
             type: Schema.Types.ObjectId,
-            ref: "Company",
+            ref: "User",
             index: true,
             required: true,
         },
     },
     {
         timestamps: true
+    },
+    {
+        applicants: [String]
     }
 )
 
