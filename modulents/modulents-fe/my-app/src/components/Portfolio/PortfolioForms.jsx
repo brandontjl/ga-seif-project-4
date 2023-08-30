@@ -1,25 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import axios from "axios"
-
-// need to edit this portion
-const addPortfolio = async (portfolio) => {
-    await axios
-        .post(`${BASE_URL}/expense/insertExpense`, expense, {
-            headers: { Authorization: `Bearer ${Cookies.get("userAuthToken")}` },
-        })
-        .then((res) => {
-            console.info(">>> create income res: ", res);
-            getExpenses();
-        })
-        .catch((error) => {
-            console.error((error) => {
-                console.error(">>> create income error: ", error);
-                setError(error.response.data.message);
-            });
-        });
-};
-
+import { useGlobalContext } from "../context/globalContext";
 
 function PortfolioUploadForm() {
     const [projectName, setProjectName] = useState("")
@@ -82,7 +64,7 @@ function PortfolioUploadForm() {
     }
 
     return (
-        <PortfolioUploadStyled onSubmit={handleSubmit}>
+        <PortfolioUploadStyled onSubmit={handleSubmit} >
             <div className="input-control">
                 <input
                     id="projectName"
@@ -158,7 +140,7 @@ function PortfolioUploadForm() {
                     }}
                 />
             </div>
-            <div className="input-control">
+            {/* <div className="input-control">
                 <input
                     type="string"
                     id="projectDescription"
@@ -170,7 +152,7 @@ function PortfolioUploadForm() {
                         handleDescriptionChange(e, "projectDescription");
                     }}
                 />
-            </div>
+            </div> */}
             <div className="submit-btn">
                 <button type="submit">Add Portfolio Record</button>
             </div>
@@ -220,4 +202,4 @@ const PortfolioUploadStyled = styled.form`
   }
 `;
 
-export default PortfolioForm;
+export default PortfolioUploadForm;

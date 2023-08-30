@@ -28,7 +28,7 @@ app.use("/api/users", userRouter);
 // app.use("/api/company", companyRouter); not needed any longer since merging both ends together
 
 // Project Controller routes
-app.use("/api/projects", projectsRouter);
+app.use("/api/project", projectsRouter);
 
 // Portfolio Controller routes
 app.use("/api/portfolio", portfolioRouter);

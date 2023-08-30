@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { styled } from "styled-components";
-// import COVER_IMAGE from "../img/loginCoverPage.jpg";
+import COVER_IMAGE from "../Penguins.jpeg";
 
 export default function Register() {
     const navigate = useNavigate();
