@@ -42,8 +42,6 @@ const portfolioController = {
                     projectDescription: portfolioUpload.projectDescription,
                     skills: portfolioUpload.skills,
                     url: portfolioUpload.url,
-                    // need check on file
-                    userID: portfolioUpload.userID
                 });
             res.statusCode = 201;
             res.json({

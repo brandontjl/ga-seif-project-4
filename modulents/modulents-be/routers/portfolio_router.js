@@ -6,6 +6,6 @@ const authMiddleware = require("../middlewares/auth_middleware");
 router.get("/display", authMiddleware, portfolioController.listProjects);
 router.post("/create", authMiddleware, portfolioController.createPortfolio);
 router.post("/update/:recordID", authMiddleware, portfolioController.updatePortfolio);
-router.post("/deleteRecord", authMiddleware, portfolioController.deletePortfolio);
+router.post("/deleteRecord/:recordID", authMiddleware, portfolioController.deletePortfolio);
 
 module.exports = router;

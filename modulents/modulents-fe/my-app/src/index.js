@@ -12,30 +12,30 @@ import GuestOnly from "./components/auth/GuestOnly";
 import AuthOnly from "./components/auth/AuthOnly";
 import { GlobalProvider } from "./context/globalContext";
 import App from "./App";
-import Project from "./components/Projects";
+// import Project from "./components/Projects";
 import Portfolio from "./components/Portfolio";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <AuthOnly component={App} />
-  },
-  {
-    path: "/login",
+    path: "/userLogin",
     element: <GuestOnly component={Login} />
   },
   {
-    path: "/register",
+    path: "/userRegister",
     element: <GuestOnly component={Register} />
   },
   {
-    path: "/portfolio",
-    element: <AuthOnly component={Portfolio} />
+    path: "/homepage",
+    element: <AuthOnly component={App} />
   },
   {
-    path: "/project",
-    element: <AuthOnly component={Project} />
-  }
+    path: "/portfolio",
+    element: <AuthOnly component={Portfolio} /> // How to combine these two routes?
+  },
+  // {
+  //   path: "/project",
+  //   element: <AuthOnly component={Project} />
+  // }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

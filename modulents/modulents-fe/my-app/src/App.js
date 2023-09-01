@@ -1,26 +1,33 @@
 import { styled } from "styled-components";
-import { MainLayout } from "./components/styles/Layouts";
+import { MainLayout } from "./styles/Layouts";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import image from "./Penguins.jpeg"
 import Header from "./components/Header/Header";
 import Portfolio from "./components/Portfolio/Portfolio";
-import Projects from "./components/Projects/Projects";
+// import Projects from "./components/Projects/Projects";
 
 function App() {
-  const [active, setActive] = useState(1);
+  // const [active, setActive] = useState(1);
 
+  // react-router-redirect
 
   return (
-    <div style={{
+    <div class="container" style={{
       backgroundImage: `url(${image})`
     }} className="App">
       <header className="App-header">
         <Header />
       </header>
 
-      <Routes>
-        <Route path="/teamdata" element={<TeamsStats />} />
-        <Route path="/playerdata" element={<PlayerStats />} />
-      </Routes>
+      {/* <div className="projects">
+        <h1>Open Projects</h1>
+        <Projects />
+      </div> */}
+      <div className="portfolio">
+        <h2>Portfolio - Completed</h2>
+        <Portfolio />
+      </div>
     </div>
   );
 }

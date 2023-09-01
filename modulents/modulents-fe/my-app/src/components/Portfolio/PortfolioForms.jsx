@@ -1,67 +1,94 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import axios from "axios"
-import { useGlobalContext } from "../context/globalContext";
+import { useGlobalContext } from "../../context/globalContext";
 
 function PortfolioUploadForm() {
-    const [projectName, setProjectName] = useState("")
-    const [dateCompleted, setDateCompleted] = useState("")
-    const [company, setCompany] = useState("")
-    const [projectDescription, setProjectDescription] = useState("")
-    const [skills, setSkills] = useState("")
-    const [url, setUrl] = useState("")
-    const [file, setFile] = useState(null)
+    const { addPortfolio } = useGlobalContext();
+    const [formData, setFormData] = useState({
+        projectName: "",
+        dateCompleted: "",
+        company: "",
+        projectDescription: "",
+        skills: "",
+        url: ""
+    });
 
-
-    const handleNameChange = (e) => {
-        setProjectName(e.target.value)
+    const handleFormChange = (e, fieldName) => {
+        setFormData({
+            ...formData,
+            [fieldName]: e.target.value,
+        });
     };
-
-    const handleDateChange = (e) => {
-        setDateCompleted(e.target.value)
-    }
-
-    const handleCompanyChange = (e) => {
-        setCompany(e.target.value)
-    };
-
-    const handleDescriptionChange = (e) => {
-        setProjectDescription(e.target.value)
-    }
-
-    const handleSkillsChange = (e) => {
-        setSkills(e.target.value)
-    };
-
-    const handleUrlChange = (e) => {
-        setUrl(e.target.value)
-    }
-
-    const handleFileChange = (e) => {
-        const projectFile = e.target.files[0];
-        setFile(projectFile)
-    };
+    // const [projectName, setProjectName] = useState("")
+    // const [dateCompleted, setDateCompleted] = useState("")
+    // const [company, setCompany] = useState("")
+    // const [projectDescription, setProjectDescription] = useState("")
+    // const [skills, setSkills] = useState("")
+    // const [url, setUrl] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const formData = new FormData();
-        formData.append('projectName', projectName);
-        formData.append('dateCompleted', dateCompleted);
-        formData.append('company', company)
-        formData.append('projectDescription', projectDescription)
-        formData.append('url', url)
-        formData.append('skills', skills)
-        formData.append('file', file)
         try {
-            await addPortfolio(formData)
-            formData = null
-            console.log("submitting portfolio project record")
-        } catch (err) {
-            console.info(">>> error adding portfolio: ", err)
-            window.alert("An error occurred, please try again")
+            await addPortfolio(formData);
+            setFormData({
+                projectName: "",
+                dateCompleted: "",
+                company: "",
+                projectDescription: "",
+                skills: "",
+                url: ""
+            });
+            console.log("submitting portfolio");
+        } catch (error) {
+            console.info(">>> error adding portfolio: ", error);
+            window.alert("An error, please try again.");
         }
-    }
+    };
+
+    // const handleNameChange = (e) => {
+    //     setProjectName(e.target.value)
+    // };
+
+    // const handleDateChange = (e) => {
+    //     setDateCompleted(e.target.value)
+    // }
+
+    // const handleCompanyChange = (e) => {
+    //     setCompany(e.target.value)
+    // };
+
+    // const handleDescriptionChange = (e) => {
+    //     setProjectDescription(e.target.value)
+    // }
+
+    // const handleSkillsChange = (e) => {
+    //     setSkills(e.target.value)
+    // };
+
+    // const handleUrlChange = (e) => {
+    //     setUrl(e.target.value)
+    // }
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     const formData = new FormData();
+    //     formData.append('projectName', projectName);
+    //     formData.append('dateCompleted', dateCompleted);
+    //     formData.append('company', company)
+    //     formData.append('projectDescription', projectDescription)
+    //     formData.append('url', url)
+    //     formData.append('skills', skills)
+    //     try {
+    //         await addPortfolio(formData)
+    //         formData = null
+    //         console.log("submitting portfolio project record")
+    //     } catch (err) {
+    //         console.info(">>> error adding portfolio: ", err)
+    //         window.alert("An error occurred, please try again")
+    //     }
+    // }
 
     return (
         <PortfolioUploadStyled onSubmit={handleSubmit} >
@@ -73,7 +100,7 @@ function PortfolioUploadForm() {
                     required
                     value={formData.projectName}
                     onChange={(e) => {
-                        handleNameChange(e, "projectName");
+                        handleFormChange(e, "projectName");
                     }}
                 />
             </div>
@@ -86,7 +113,7 @@ function PortfolioUploadForm() {
                     value={formData.dateCompleted}
                     required
                     onChange={(e) => {
-                        handleDateChange(e, "dateCompleted");
+                        handleFormChange(e, "dateCompleted");
                     }}
                 />
             </div>
@@ -97,7 +124,7 @@ function PortfolioUploadForm() {
                     required
                     value={formData.company}
                     onChange={(e) => {
-                        handleCompanyChange(e, "company");
+                        handleFormChange(e, "company");
                     }}
                 />
             </div>
@@ -110,7 +137,7 @@ function PortfolioUploadForm() {
                     value={formData.projectDescription}
                     required
                     onChange={(e) => {
-                        handleDescriptionChange(e, "projectDescription");
+                        handleFormChange(e, "projectDescription");
                     }}
                 />
             </div>
@@ -123,7 +150,7 @@ function PortfolioUploadForm() {
                     value={formData.skills}
                     required
                     onChange={(e) => {
-                        handleSkillsChange(e, "skills");
+                        handleFormChange(e, "skills");
                     }}
                 />
             </div>
@@ -136,7 +163,7 @@ function PortfolioUploadForm() {
                     value={formData.url}
                     required
                     onChange={(e) => {
-                        handleUrlChange(e, "url");
+                        handleFormChange(e, "url");
                     }}
                 />
             </div>

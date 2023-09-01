@@ -6,7 +6,7 @@ export default function GuestOnly(props) {
     const { getUserFromToken } = useContext(AuthContext);
     const user = getUserFromToken();
 
-    if (user) return <Navigate to={"/"} />;
+    if (user) return <Navigate to={"/homepage"} />;
 
     return <props.component></props.component>;
 }

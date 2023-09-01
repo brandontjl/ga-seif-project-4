@@ -20,7 +20,7 @@ export default function Register() {
         e.preventDefault();
         axios
             .post(
-                "https://expense-tracker-bzs3.onrender.com/api/users/register",
+                "https://localhost:3000.com/api/users/userRegister",
                 formData
             )
             .then((response) => {

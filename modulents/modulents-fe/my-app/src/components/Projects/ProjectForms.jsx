@@ -1,97 +1,95 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import axios from "axios"
-import { useGlobalContext } from "../components/context/globalContext";
-
-
-// need to edit this portion
-const addProject = async (project) => {
-    await axios
-        .post(`${BASE_URL}/project/create`, project, {
-            headers: { Authorization: `Bearer ${Cookies.get("userAuthToken")}` },
-        })
-        .then((res) => {
-            console.info(">>> create record res: ", res);
-            getProject(); // check this
-        })
-        .catch((error) => {
-            console.error((error) => {
-                console.error(">>> create record error: ", error);
-                setError(error.response.data.message);
-            });
-        });
-};
-
-const getProject = async () => {
-    await axios.get(`${BASE_URL}/project/display`, project, {
-        headers: {
-            Authorization: `Bearer ${Cookies.get("userAuthToken")}`
-        },
-    })
-        .then((res) => {
-            console.info(">>> get portfolio res: ", res);
-        })
-        .catch((err) => {
-            console.error(">>> get portfolio error: ", err)
-        })
-}
-
+import { useGlobalContext } from "../../context/globalContext";
 
 function ProjectUploadForm() {
-    const [projectName, setProjectName] = useState("")
-    const [date, setDate] = useState("")
-    const [teamSize, setTeamSize] = useState("")
-    const [projectDescription, setProjectDescription] = useState("")
-    const [skills, setSkills] = useState("")
+    const { addProject } = useGlobalContext();
+    const [formData, setFormData] = useState({
+        projectName: "",
+        date: "",
+        teamSize: 0,
+        projectDescription: "",
+        skills: ""
+    });
 
-    // projectName: { type: String, required: true },
-    // date: { type: Date, required: true },
-    // teamSize: { type: Number, required: true },
-    // projectDescription: { type: String, required: true },
-    // skills: { type: String, required: true },
-
-
-    const handleNameChange = (e) => {
-        setProjectName(e.target.value)
+    const handleFormChange = (e, fieldName) => {
+        setFormData({
+            ...formData,
+            [fieldName]: e.target.value,
+        });
     };
-
-    const handleDateChange = (e) => {
-        setDate(e.target.value)
-    }
-
-    const handleDescriptionChange = (e) => {
-        setProjectDescription(e.target.value)
-    }
-
-    const handleSkillsChange = (e) => {
-        setSkills(e.target.value)
-    };
-
-    const handleSizeChange = (e) => {
-        setTeamSize(e.target.value)
-    }
+    // const [projectName, setProjectName] = useState("")
+    // const [dateCompleted, setDateCompleted] = useState("")
+    // const [company, setCompany] = useState("")
+    // const [projectDescription, setProjectDescription] = useState("")
+    // const [skills, setSkills] = useState("")
+    // const [url, setUrl] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const formData = new FormData();
-        formData.append('projectName', projectName);
-        formData.append('date', date);
-        formData.append('projectDescription', projectDescription)
-        formData.append('skills', skills)
-        formData.append('teamSize', teamSize)
         try {
-            await addProject(formData)
-            formData = null
-            console.log("submitting project record")
-        } catch (err) {
-            console.info(">>> error adding project: ", err)
-            window.alert("An error occurred, please try again")
+            await addProject(formData);
+            setFormData({
+                projectName: "",
+                date: "",
+                teamSize: 0,
+                projectDescription: "",
+                skills: "",
+            });
+            console.log("submitting project");
+        } catch (error) {
+            console.info(">>> error adding project: ", error);
+            window.alert("An error, please try again.");
         }
-    }
+    };
+
+    // const handleNameChange = (e) => {
+    //     setProjectName(e.target.value)
+    // };
+
+    // const handleDateChange = (e) => {
+    //     setDateCompleted(e.target.value)
+    // }
+
+    // const handleCompanyChange = (e) => {
+    //     setCompany(e.target.value)
+    // };
+
+    // const handleDescriptionChange = (e) => {
+    //     setProjectDescription(e.target.value)
+    // }
+
+    // const handleSkillsChange = (e) => {
+    //     setSkills(e.target.value)
+    // };
+
+    // const handleUrlChange = (e) => {
+    //     setUrl(e.target.value)
+    // }
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     const formData = new FormData();
+    //     formData.append('projectName', projectName);
+    //     formData.append('dateCompleted', dateCompleted);
+    //     formData.append('company', company)
+    //     formData.append('projectDescription', projectDescription)
+    //     formData.append('url', url)
+    //     formData.append('skills', skills)
+    //     try {
+    //         await addPortfolio(formData)
+    //         formData = null
+    //         console.log("submitting portfolio project record")
+    //     } catch (err) {
+    //         console.info(">>> error adding portfolio: ", err)
+    //         window.alert("An error occurred, please try again")
+    //     }
+    // }
 
     return (
-        <ProjectUploadStyled onSubmit={handleSubmit}>
+        <ProjectUploadStyled onSubmit={handleSubmit} >
             <div className="input-control">
                 <input
                     id="projectName"
@@ -100,7 +98,7 @@ function ProjectUploadForm() {
                     required
                     value={formData.projectName}
                     onChange={(e) => {
-                        handleNameChange(e, "projectName");
+                        handleFormChange(e, "projectName");
                     }}
                 />
             </div>
@@ -113,7 +111,18 @@ function ProjectUploadForm() {
                     value={formData.date}
                     required
                     onChange={(e) => {
-                        handleDateChange(e, "dateCompleted");
+                        handleFormChange(e, "date");
+                    }}
+                />
+            </div>
+            <div className="input-control">
+                <input
+                    name="teamSize"
+                    id="teamSize"
+                    required
+                    value={formData.teamSize}
+                    onChange={(e) => {
+                        handleFormChange(e, "teamSize");
                     }}
                 />
             </div>
@@ -126,7 +135,7 @@ function ProjectUploadForm() {
                     value={formData.projectDescription}
                     required
                     onChange={(e) => {
-                        handleDescriptionChange(e, "projectDescription");
+                        handleFormChange(e, "projectDescription");
                     }}
                 />
             </div>
@@ -139,25 +148,12 @@ function ProjectUploadForm() {
                     value={formData.skills}
                     required
                     onChange={(e) => {
-                        handleSkillsChange(e, "skills");
-                    }}
-                />
-            </div>
-            <div className="input-control">
-                <input
-                    type="number"
-                    id="teamSize"
-                    name="teamSize"
-                    placeholder="Ideal team size"
-                    value={formData.teamSize}
-                    required
-                    onChange={(e) => {
-                        handleSizeChange(e, "url");
+                        handleFormChange(e, "skills");
                     }}
                 />
             </div>
             <div className="submit-btn">
-                <button type="submit">Add <Project></Project> Record</button>
+                <button type="submit">Add Project Record</button>
             </div>
         </ProjectUploadStyled >
     );

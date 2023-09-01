@@ -21,11 +21,11 @@ export default function Login() {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-            .post("https://localhost3000/api/users/userLogin", formData)
+            .post("https://localhost:3000/api/users/userLogin", formData)
             .then((response) => {
                 console.info(">>> login user response: ", response);
                 loginSuccess(response.data.token);
-                navigate("/");
+                navigate("/homepage");
             })
             .catch((err) => {
                 console.error(">>> login user error: ", err);
