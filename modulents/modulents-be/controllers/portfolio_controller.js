@@ -4,8 +4,8 @@ const portfolioValidator = require("./validators/portfolioValidator")
 // how to split the controller for either admin or user?
 
 const portfolioController = {
-    listProjects: async (res, req) => {
-        const userID = res.locals.authUserID
+    listProjects: async (req, res) => {
+        const userID = req.locals.authUserID
 
         try {
             const projects = await portfolioModel.find({ userID: userID });
@@ -20,7 +20,9 @@ const portfolioController = {
 
     // create a project to reflect to companies
     createPortfolio: async (req, res) => {
-        const userID = res.locals.authUserID
+        console.log("line 24", req)
+
+        const userID = req.locals.authUserID
 
         const portfolioUpload = { ...req.body, userID: userID };
 
@@ -56,7 +58,7 @@ const portfolioController = {
     },
 
     deletePortfolio: async (req, res) => {
-        const userID = res.locals.authUserID
+        const userID = req.locals.authUserID
 
         const portfolioUpload = { ...req.body, userID: userID }
 
@@ -79,7 +81,7 @@ const portfolioController = {
     },
 
     updatePortfolio: async (req, res) => {
-        const userID = res.locals.authUserID;
+        const userID = req.locals.authUserID;
         const data = req.body;
         let record = null;
 

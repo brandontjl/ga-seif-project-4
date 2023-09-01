@@ -21,5 +21,5 @@ const userPortfolioSchema = new mongoose.Schema(
     }
 )
 
-const Portfolio = mongoose.model("Portfolio", userPortfolioSchema);
+const Portfolio = mongoose.model("Portfolios", userPortfolioSchema);
 module.exports = Portfolio
