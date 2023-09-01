@@ -40,7 +40,7 @@ const middleware = (req, res, next) => {
     }
 
     // set decoded "sub" field (refers to who the token belongs to) to res.locals
-    res.locals.authUserID = decoded.sub;
+    req.locals.authUserID = decoded.sub;
 
     next();
 };

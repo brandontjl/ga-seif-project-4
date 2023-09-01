@@ -40,10 +40,10 @@ function ProjectItem({
     };
 
     const handleEdit = (projectName, date, teamSize, projectDescription, skills,) => {
-        setSelectedPortfolio({
+        setSelectedProject({
             projectName: projectName,
             date: date.substring(0, 10),
-            company: company,
+            teamSize: teamSize,
             projectDescription: projectDescription,
             skills: skills
         });

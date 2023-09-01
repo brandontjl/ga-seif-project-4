@@ -5,6 +5,7 @@ import { useState } from "react";
 import image from "./CorporateBackground.jpeg"
 import Header from "./components/Header/Header";
 import Portfolio from "./components/Portfolio/Portfolio";
+import Projects from "./components/Projects/Projects"
 import Register from "./components/UserRegister";
 import Login from "./components/UserLogin";
 import GuestOnly from "./components/auth/GuestOnly";
@@ -13,12 +14,18 @@ import AuthProvider from "./components/auth/AuthProvider";
 import AuthOnly from "./components/auth/AuthOnly";
 // import { BrowserRouter as Router, Route, Routes, Switch } from "react-router-dom"
 import { useContext } from "react";
+import { AuthContext } from "./auth/AuthProvider";
+import './App.css'
+
 
 
 // import Projects from "./components/Projects/Projects";
 
 function App() {
   const [active, setActive] = useState(1);
+  const { logoutSuccess, getUserFromToken } = useContext(AuthContext);
+  const user = getUserFromToken();
+
 
   // react-router-redirect
 
@@ -36,13 +43,18 @@ function App() {
         <Header />
       </header>
 
-      {/* <div className="projects">
-        <h1>Open Projects</h1>
-        <Projects />
-      </div> */}
       <div className="portfolio">
         <h2>Portfolio - Completed</h2>
         <Portfolio />
+      </div>
+
+      <div className="projects">
+        <h1>Open Projects</h1>
+        <Projects />
+      </div>
+
+      <div className="bottom-nav">
+        <button onClick={logoutSuccess}> Log Out</button>
       </div>
     </div>
   );

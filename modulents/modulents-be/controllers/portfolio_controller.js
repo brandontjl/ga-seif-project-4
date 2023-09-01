@@ -5,7 +5,7 @@ const portfolioValidator = require("./validators/portfolioValidator")
 
 const portfolioController = {
     listProjects: async (req, res) => {
-        const userID = req.locals.authUserID
+        const userID = res.locals.authUserID
 
         try {
             const projects = await portfolioModel.find({ userID: userID });
@@ -22,7 +22,7 @@ const portfolioController = {
     createPortfolio: async (req, res) => {
         console.log("line 24", req)
 
-        const userID = req.locals.authUserID
+        const userID = res.locals.authUserID
 
         const portfolioUpload = { ...req.body, userID: userID };
 
@@ -58,7 +58,7 @@ const portfolioController = {
     },
 
     deletePortfolio: async (req, res) => {
-        const userID = req.locals.authUserID
+        const userID = res.locals.authUserID
 
         const portfolioUpload = { ...req.body, userID: userID }
 
@@ -81,7 +81,7 @@ const portfolioController = {
     },
 
     updatePortfolio: async (req, res) => {
-        const userID = req.locals.authUserID;
+        const userID = res.locals.authUserID;
         const data = req.body;
         let record = null;
 

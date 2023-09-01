@@ -188,8 +188,8 @@ function PortfolioUploadForm() {
 }
 
 const PortfolioUploadStyled = styled.form`
-  display: flex;
-  flex-direction: column;
+  display: absolute;
+  flex-direction: row;
   gap: 2rem;
 
   input,
@@ -212,7 +212,7 @@ const PortfolioUploadStyled = styled.form`
 
   .input-control {
     input {
-      width: 100%;
+      width: 40%;
     }
   }
 

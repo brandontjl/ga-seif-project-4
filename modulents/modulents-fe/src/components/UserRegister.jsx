@@ -6,92 +6,92 @@ import { styled } from "styled-components";
 import COVER_IMAGE from "../Penguins.jpeg";
 
 export default function Register() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    // create state to store form data
-    const [formData, setFormData] = useState({});
-    const [error, setError] = useState({});
+  // create state to store form data
+  const [formData, setFormData] = useState({});
+  const [error, setError] = useState({});
 
-    const handleFormChange = (e, fieldName) => {
-        setFormData({ ...formData, [fieldName]: e.target.value });
-    };
+  const handleFormChange = (e, fieldName) => {
+    setFormData({ ...formData, [fieldName]: e.target.value });
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios
-            .post(
-                "http://localhost:3000/api/users/userRegister",
-                formData
-            )
-            .then((response) => {
-                console.info(">>> register user response: ", response);
-                navigate("/userLogin");
-            })
-            .catch((err) => {
-                console.error(">>> register user error: ", err);
-                setError(err.message);
-                window.alert(err.message);
-            });
-    };
-    // need to change the cover image
-    return (
-        <RegisterStyled>
-            <div className="image-container">
-                <img src={COVER_IMAGE} alt="" />
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        "http://localhost:3000/api/users/userRegister",
+        formData
+      )
+      .then((response) => {
+        console.info(">>> register user response: ", response);
+        navigate("/userLogin");
+      })
+      .catch((err) => {
+        console.error(">>> register user error: ", err);
+        setError(err.message);
+        window.alert(err.message);
+      });
+  };
+  // need to change the cover image
+  return (
+    <RegisterStyled>
+      <div className="image-container">
+        <img src={COVER_IMAGE} alt="" />
+      </div>
+
+      <div className="register-container">
+        <div className="form-container">
+          <h3>Freelance as a Team</h3>
+
+          <form onSubmit={handleSubmit}>
+            <div className="input-container">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Name"
+                required
+                onChange={(e) => {
+                  handleFormChange(e, "name");
+                }}
+              />
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                required
+                onChange={(e) => {
+                  handleFormChange(e, "email");
+                }}
+              />
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                required
+                onChange={(e) => {
+                  handleFormChange(e, "password");
+                }}
+              />
+              <div>
+                <button onClick={handleSubmit}>Register</button>
+                <button
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                >
+                  Back
+                </button>
+              </div>
             </div>
-
-            <div className="register-container">
-                <div className="form-container">
-                    <h3>Freelance as a Team</h3>
-
-                    <form onSubmit={handleSubmit}>
-                        <div className="input-container">
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                placeholder="Name"
-                                required
-                                onChange={(e) => {
-                                    handleFormChange(e, "name");
-                                }}
-                            />
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="Email"
-                                required
-                                onChange={(e) => {
-                                    handleFormChange(e, "email");
-                                }}
-                            />
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Password"
-                                required
-                                onChange={(e) => {
-                                    handleFormChange(e, "password");
-                                }}
-                            />
-                            <div>
-                                <button onClick={handleSubmit}>Register</button>
-                                <button
-                                    onClick={() => {
-                                        navigate(-1);
-                                    }}
-                                >
-                                    Back
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div >
-        </RegisterStyled >
-    );
+          </form>
+        </div>
+      </div >
+    </RegisterStyled >
+  );
 }
 
 const RegisterStyled = styled.div`

@@ -153,15 +153,15 @@ function ProjectUploadForm() {
                 />
             </div>
             <div className="submit-btn">
-                <button type="submit">Add Project Record</button>
+                <button onClick={handleSubmit}>Add Project Record</button>
             </div>
         </ProjectUploadStyled >
     );
 }
 
 const ProjectUploadStyled = styled.form`
-  display: flex;
-  flex-direction: column;
+  display: absolute;
+  flex-direction: row;
   gap: 2rem;
 
   input,
@@ -184,7 +184,7 @@ const ProjectUploadStyled = styled.form`
 
   .input-control {
     input {
-      width: 100%;
+      width: 40%;
     }
   }
 
